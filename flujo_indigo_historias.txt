@@ -1,0 +1,55 @@
+# Por cédula: plantillas 1–12 en templates/ (numeración alineada al flujo de impresión).
+# Ajuste sleeps según el PC y la red.
+
+click 1
+sleep 0.45
+type_cedula
+key enter
+sleep 0.85
+# Motivo: type_motivo_consulta abre (caja blanca + F4) y elige valor del Excel (D/E). No usar click 2.
+wait_template 2 55 0.28
+sleep 0.3
+type_motivo_consulta
+sleep 0.85
+# type_observacion: clic plantilla 3 + pega columna F (no usar click 3 aparte).
+type_observacion
+sleep 0.45
+click 4
+# Paso 5 — listado de folios: una vez por PC: py run_indigo_historias.py --calibrar-folios
+# (crea indigo_calibracion_folios.json en esta carpeta). click_folios = calibración + clic HWND si AnyDesk bloquea el ratón.
+sleep 1.4
+click_folios
+# Tras el clic derecho NO traer IndiGO al frente (el menú se cerraría). click 6 busca el PNG en pantalla completa.
+sleep 0.9
+click 6
+# Equivalente: click_menu_folio 6
+sleep 0.85
+click 7
+sleep 0.5
+click 8
+# El modal «Consultar / Imprimir Historias» tarda un instante; plantilla 9 busca el botón Imprimir ahí.
+sleep 0.85
+click 9
+# Tras el 1.er Imprimir (modal Vie) hay espera larga (~PDF). Luego debe abrirse el #32770 «Imprimir» de Windows.
+# esperar_modal_imprimir NO usa el mismo botón del modal Vie (plantillas 9 y 10 son PNG parecidos).
+# INDIGO_IMP10_SOLO_DIALOGO_WINDOWS=1 (defecto); INDIGO_ESPERA_MIN_TRAS_IMPRIMIR_9; TIMEOUT 300s.
+# Foco: no use el PC (Cursor/consola) entre 9 y 10; el RPA mantiene Imprimir/Vie (INDIGO_BLOQUEO_FOCO_IMPRESION=1).
+esperar_modal_imprimir 300 0.55
+# Clic 10: omitido si ya abrió «Guardar impresión como» (Print to PDF; a veces minimizado).
+click 10
+# wait_impresion: si Guardar ya está abierto, pasa directo a escribir cédula.
+wait_impresion_windows 240
+sleep 0.35
+wait_template 11 120 0.32
+# guardar_pdf_cedula: foco en «Nombre», CDM+teclado sustituyen «Verificación Tic» (motivo) por cédula columna A.
+# Si falla el nombre: click 11 (plantilla en el cuadro Nombre) o INDIGO_PLANTILLA_11_FRACCION_X/Y (def. 0.82, 0.50).
+guardar_pdf_cedula
+sleep 0.7
+wait_template 12 90 0.28
+click 12
+sleep 0.4
+# No usar type_cedula aquí: es la misma cédula de la iteración actual y vuelve a rellenar «documento»
+# antes del siguiente paciente; el bucle ya hace click 1 + type_cedula con la siguiente fila del Excel.
+# Si hace falta confirmar el Deshacer: descomente la siguiente línea.
+# key enter
+sleep 0.6

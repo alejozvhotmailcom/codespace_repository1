@@ -1,0 +1,11 @@
+pywinauto>=0.6.9
+pywin32>=306
+opencv-python-headless>=4.8.0
+numpy>=1.26.0
+pyautogui>=0.9.54
+mss>=9.0.0
+openpyxl>=3.1.0
+# Opcional — detección de ventana por OCR (INDIGO_VENTANA_OCR=tesseract|easyocr):
+# pillow>=10.0.0
+# pytesseract>=0.3.10
+# easyocr>=1.7.0

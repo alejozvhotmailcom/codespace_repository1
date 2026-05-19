@@ -1,0 +1,7 @@
+# Fase inicial (una vez), mismo criterio que Stone/H40 (desprendibles): primer paso = plantilla 1 (input).
+# No hace falta PNG «0 / Pantalla inicial» en templates/ si ya está «Consulta historias» con el campo Paciente visible.
+
+wait_template 1 75 0.22
+sleep 0.35
+click 1
+sleep 0.3
